@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: farmer-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: farmer123
+      MYSQL_DATABASE: farmer_db
+      MYSQL_USER: farmer
+      MYSQL_PASSWORD: farmer123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/src/main/resources/db:/docker-entrypoint-initdb.d
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: farmer-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass farmer123
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  redis_data:
