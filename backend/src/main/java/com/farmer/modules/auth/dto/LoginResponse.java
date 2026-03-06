@@ -1,0 +1,16 @@
+package com.farmer.modules.auth.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class LoginResponse {
+    private String token;
+    private String username;
+    private String realName;
+    private Long userId;
+    private Long regionId;
+    private Long roleId;
+    private Long expiresIn;
+}
